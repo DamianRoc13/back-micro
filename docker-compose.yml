@@ -1,0 +1,22 @@
+services:
+  comprobantes-sri:
+    build:
+      context: ./comprobantes-sri
+      dockerfile: Dockerfile
+    container_name: comprobantes-sri
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./src:/app/src
+    command: python main.py
+  
+  consultas-ant:
+    build: 
+      context: ./consulta-ant
+      dockerfile: Dockerfile
+    container_name: consultas-ant
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./src:/app/src
+    command: python app.py
