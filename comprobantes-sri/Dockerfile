@@ -1,19 +1,13 @@
-FROM python:3.12-alpine
+FROM python:3.13-slim-bullseye
 
-RUN groupadd -r transcription_service && \
-    useradd -r -g transcription_service -d /home/transcription_service transcription_service && \
-    mkdir -p /home/transcription_service && \
-    chown transcription_service:transcription_service /home/transcription_service
 WORKDIR /app
-RUN pip install --no-cache-dir poetry
+COPY . /app
 
-RUN poetry config virtualenvs.create false --local
+# Instalar dependencias del sistema
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    python3-dev \
+    && pip install -r requirements.txt \
+    && apt-get purge -y --auto-remove gcc python3-dev
 
-COPY pyproject.toml poetry.lock ./
-RUN poetry install --no-interaction --no-ansi --with transcription_service
-
-RUN mkdir src && \
-    chown -R transcription_service:transcription_service /app
-
-USER transcription_service
-
+COPY . .

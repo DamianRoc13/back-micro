@@ -106,11 +106,11 @@ def importar_excel():
 # Función para abrir el navegador automáticamente
 def open_browser():
     time.sleep(1)  # Esperar un segundo para que Flask esté listo
-    webbrowser.open('http://127.0.0.1:5000')
+    webbrowser.open('http://127.0.0.1:5001')
 
 if __name__ == '__main__':
     # Iniciar el navegador en un hilo separado
     threading.Thread(target=open_browser).start()
     # Iniciar la aplicación Flask
-    print("Servidor Flask iniciado. Escuchando en el puerto 5000...")
+    print("Servidor Flask iniciado. Escuchando en el puerto 5001...")
     app.run(host="0.0.0.0", port=5000, debug=False)
